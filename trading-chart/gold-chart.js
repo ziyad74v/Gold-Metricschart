@@ -43,6 +43,9 @@ const indicatorsValue = document.getElementById("gauge-indicators-value");
 const indicatorsShell = document.getElementById("gauge-indicators-shell");
 const indicatorsResult = document.getElementById("gauge-indicators-result");
 
+let seasonalsLabelRows = [];
+let seasonalsHoverTimestamp = null;
+
 const chart = LightweightCharts.createChart(
     priceChartElement,
     {
@@ -220,6 +223,7 @@ const MIN_WICK_SIZE = 0.2;
 const VOLUME_STEP = 1;
 const VOLUME_VOLATILITY_FACTOR = 20;
 const DISPLAY_TICK_VOLUME_MULTIPLIER = 1200;
+const memoryStore = new Map();
 const SEASONAL_TARGET_YEARS = [2025, 2024, 2026];
 const SEASONAL_YEAR_COLORS = {
     2025: "#00c176",
@@ -246,11 +250,8 @@ let alertEnabled = loadAlertEnabledFromStorage() && Number.isFinite(alertTarget)
 let audioContext = null;
 let alertMenuOpen = false;
 let seasonalityLoadedFromHistory = false;
-let seasonalsLabelRows = [];
-let seasonalsHoverTimestamp = null;
 let didInitialAutoScroll = false;
 let oneMinuteZoomBars = 260;
-const memoryStore = new Map();
 
 function safeStorageGet(key) {
     try {
